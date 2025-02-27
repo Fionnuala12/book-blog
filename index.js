@@ -64,16 +64,18 @@ app.post("/new", async (req,res) => {
   const title = req.body.title; 
   const author = req.body.author; 
   const review = req.body.review;
+  const rating = req.body.ratings;
+
 
   try {
-    await db.query("INSERT INTO books (title, author, review) VALUES ($1, $2, $3)", 
-      [title, author, review]);
+    await db.query("INSERT INTO books (title, author, review, star) VALUES ($1, $2, $3, $4)", 
+      [title, author, review, rating]);
     
     res.redirect("/");
   } catch(err) {
     console.log(err);
   }
-})
+});
 
 // Edit post
 app.get("/edit/:id", findBookById, (req, res) => {
