@@ -1,9 +1,15 @@
+:root {
+    --body-fonts: "Josefin Sans", sans-serif;
+}
+
 body {
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: #FFFDF5;
+    font-family: var(--body-fonts);
 }
 
 .header-img {
@@ -26,10 +32,10 @@ h3 {
     padding-top: 15px;
     text-align: center;
     color:#333333;
-    font-family: "Josefin Sans", sans-serif;
 }
 
-form {
+/* Add Form */
+.add-form {
     position: relative;
     margin-top: 1.75em;
     display: flex;
@@ -45,24 +51,70 @@ input[type="text"] {
     width: 300px;
 }
 
-button {
-    background-color: #fff;
-    padding: 5px 10px;
-    font-size: 1em;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    cursor: pointer;
+.add-button {
+  background: #F18949;
+  border: 1px solid #F18949;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 14px;
+  min-height: 40px;
+  outline: 0;
+  padding: 12px 14px;
+  text-align: center;
 }
 
-.container {
+.add-button:hover,
+.add-button:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: #F18949;
+}
+
+.add-button:active {
+  opacity: .5;
+}
+
+
+/* Page */ 
+.main-container {
     position: absolute; 
     margin-top: 3em;  
 }
 
-.ratings-wrapper {
-    
+.cover-img {
+    height: 100%;
+}
+
+.form-title {
+    width: 100% !important;  /* Makes it take up the full width of the form */
+    max-width: 600px !important; /* Adjust as needed */
+}
+
+.form-content {
+    height: 200px;
+    margin-bottom: 2em;
+}
+
+a {
+    color: #fff;
+    text-decoration: none;  
+}
+
+.card-btn {
+    background-color: #F18949;
+    color: #fff;
+}
+
+/* Star rating */
+.ratings-wrapper { 
     display: inline-block; 
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     padding: 0 10px;
 }
 

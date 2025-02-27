@@ -21,6 +21,7 @@ app.use(express.static("public"));
 // Middleware to find blog ID 
 async function findBookById(req, res, next) {
   const bookId = req.params.id; 
+  
 
   try {
     const result = await db.query("SELECT * FROM books WHERE id = $1", 
@@ -28,10 +29,12 @@ async function findBookById(req, res, next) {
     );
 
     if (result.rows.length === 0) {
+      console.log("Book not found! ID:", bookId);
       return res.status(404).send("Book post not found");
     }
 
     req.book = result.rows[0];
+    console.log("Book found:", req.book)
     next();
 
   } catch(err) {
@@ -66,7 +69,6 @@ app.post("/new", async (req,res) => {
   const review = req.body.review;
   const rating = req.body.ratings;
 
-
   try {
     await db.query("INSERT INTO books (title, author, review, star) VALUES ($1, $2, $3, $4)", 
       [title, author, review, rating]);
@@ -79,14 +81,35 @@ app.post("/new", async (req,res) => {
 
 // Edit post
 app.get("/edit/:id", findBookById, (req, res) => {
+  console.log("Received ID:", req.params.id);
   res.render("edit.ejs", {book: req.book});
 });
 
 // Update post 
-app.post("/update/:id", findBookById, (req, res) => {
-    
-    const update = ("");
-})
+app.post("/update/:id", findBookById, async (req, res) => {
+  console.log("Received ID in POST request:", req.params.id); // Debugging
+
+  if (!req.params.id) {
+    return res.status(400).send("Missing book ID in request");
+  }
+
+  const postId = req.book.id;
+  console.log("Found Book:", req.book);
+
+  const title = req.body.title; 
+  const author = req.body.author;
+  const review = req.body.review;
+
+  try {
+    await db.query("UPDATE books SET title = $1, author = $2, review = $3 WHERE id = $4",
+      [title, author, review, postId]);
+      res.redirect("/");
+  } catch(err) {
+    console.log(err);
+  }
+}); 
+
+
 
 // Delete post 
 app.get("/delete/:id", findBookById, async (req, res) => {
