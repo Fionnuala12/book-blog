@@ -19,15 +19,25 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // Middleware to find blog ID 
-function findBlogId(req, res, next) {
-  const blogId = req.params.id; 
-  req.foundPost = blogPost.find( post => post.id == blogId);
+async function findBookById(req, res, next) {
+  const bookId = req.params.id; 
 
-  if(!req.foundPost) {
-    return res.status(404).send("Post not found");
+  try {
+    const result = await db.query("SELECT * FROM books WHERE id = $1", 
+      [bookId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).send("Book post not found");
+    }
+
+    req.book = result.rows[0];
+    next();
+
+  } catch(err) {
+    console.log("Error fetching book id:", err);
+    res.status(500).send("Server error");
   }
-
-  next();
 }
 
 let books = [];
@@ -37,13 +47,35 @@ app.get("/", async (req, res) => {
   try {
     const result = await db.query("SELECT * FROM books"); 
     books = result.rows; 
-    console.log(books);
+  
     res.render("index.ejs", {books});
   } catch(err) {
 console.log("Error:", (err));
   }
 });
 
+// Edit post
+app.get("/edit/:id", findBookById, (req, res) => {
+  res.render("edit.ejs", {book: req.book});
+})
+
+// Update post 
+app.post("/update/:id", findBookById, (req, res) => {
+    
+    const update = ("");
+})
+
+// Delete post 
+app.get("/delete/:id", findBookById, async (req, res) => {
+  const postId = req.book.id;
+  console.log("Delete:", postId);
+  try {
+    await db.query("DELETE FROM books WHERE id = $1", [postId]);
+    res.redirect("/");
+  } catch(err) {
+    console.log(err);
+  }
+});
 
 
 app.listen(port, () => {
