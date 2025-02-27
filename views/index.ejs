@@ -4,7 +4,7 @@
         
         <h3> You've read a total of .... books </h3>
 
-        <form action="/add" method="post">
+        <form action="/add" method="get">
             <input type="text" name="country" autofocus placeholder="Add new book...">
             <button type="submit"> Add </button>
           </form>
@@ -23,7 +23,7 @@
                   <div class="card-body">
                     <h5 class="card-title"><%= book.title %></h5>
                     <h6 class="card-text"><%= book.author %></h6>
-                    <p class="card-text"><%= book.review %></p>
+                    <p class="card-text"><%= book.review.substring(0,200) + '...' %></p>
                     <div class="star-rating"><%= book.star %></div>
                     <p class="card-text"><small class="text-body-secondary"><%= book.datecolumn %></small></p>
                     <button type="button"> <a href="/edit/<%= book.id %>" class="card-link"> Edit </a></button>  

@@ -47,17 +47,38 @@ app.get("/", async (req, res) => {
   try {
     const result = await db.query("SELECT * FROM books"); 
     books = result.rows; 
-  
     res.render("index.ejs", {books});
   } catch(err) {
-console.log("Error:", (err));
+    console.log("Error:", (err));
   }
 });
+
+// Render new post page
+app.get("/add", (req, res) => {
+  res.render("new.ejs");
+})
+
+// Create new post 
+app.post("/new", async (req,res) => {
+
+  const title = req.body.title; 
+  const author = req.body.author; 
+  const review = req.body.review;
+
+  try {
+    await db.query("INSERT INTO books (title, author, review) VALUES ($1, $2, $3)", 
+      [title, author, review]);
+    
+    res.redirect("/");
+  } catch(err) {
+    console.log(err);
+  }
+})
 
 // Edit post
 app.get("/edit/:id", findBookById, (req, res) => {
   res.render("edit.ejs", {book: req.book});
-})
+});
 
 // Update post 
 app.post("/update/:id", findBookById, (req, res) => {

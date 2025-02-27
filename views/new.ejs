@@ -1,0 +1,19 @@
+<%- include("partials/header.ejs") %>
+
+<div class="container d-flex justify-content-center align-items-center vh-100">
+<form action="/new" method="post" class="p-4 w-75 w-md-50 border rounded bg-light">
+  <div class="mb-3">
+  <label for="title" class="form-label">Title:</label>
+  <input type="text" class="form-control form-title" name="title" required>
+  <label for="author" class="form-label">Author:</label>
+  <input type="text" class="form-control form-title" name="author" required>
+</div>
+<div class="mb-3">
+  <label for="content" class="form-label">Review:</label>
+  <textarea class="form-control form-content" name="review" rows="8" required></textarea>
+  <div class="text-center">
+  <input type="submit" class="btn btn-primary submit-btn" value="Submit">
+</div>
+</div>
+</form>
+</div>
