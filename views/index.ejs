@@ -2,7 +2,7 @@
   <main>
         <hr class="top-line">
         
-        <h3> You've read a total of .... books </h3>
+        <h3> You've read a total of <%= totalBook %> books </h3>
 
         <div data-rating="5"></div>
 
@@ -19,7 +19,7 @@
             <div class="card mb-3" style="max-width: 680px;">
               <div class="row g-0">
                 <div class="col-md-4">
-                  <img src="assets/book-cover.jpeg" class="img-fluid rounded-start cover-img" alt="...">
+                  <img src="https://covers.openlibrary.org/b/olid/<%= book.cover %>-M.jpg" class="img-fluid rounded-start cover-img" alt="Book Cover">
                 </div>
                 <div class="col-md-8">
                   <div class="card-body">

@@ -48,9 +48,15 @@ let books = [];
 // Home page 
 app.get("/", async (req, res) => {
   try {
-    const result = await db.query("SELECT * FROM books"); 
+    const result = await db.query("SELECT * FROM books");  
     books = result.rows; 
-    res.render("index.ejs", {books});
+
+    const bookCount = await db.query("SELECT COUNT (title) FROM books");
+    const totalBook = bookCount.rows[0].count;
+    console.log("Number of books:", totalBook);
+
+
+    res.render("index.ejs", {books, totalBook});
   } catch(err) {
     console.log("Error:", (err));
   }
@@ -68,10 +74,39 @@ app.post("/new", async (req,res) => {
   const author = req.body.author; 
   const review = req.body.review;
   const rating = req.body.ratings;
+  let cover = null;
 
   try {
-    await db.query("INSERT INTO books (title, author, review, star) VALUES ($1, $2, $3, $4)", 
-      [title, author, review, rating]);
+    // Fetch ISBN from Openlibrary 
+    const response = await fetch(`https://openlibrary.org/search.json?title=${title}`);
+   
+    const data = await response.json(); // convert response into a JSON format 
+    console.log("Number of books found:", data.docs.length);
+
+  
+    
+    
+
+    if (data.docs.length > 0) {
+      let firstBook = data.docs[0]; 
+      console.log("Firstbook:", firstBook);
+
+      if(firstBook.key) {
+         cover = firstBook.cover_edition_key;
+      }  
+    }
+
+    console.log("Open library ID:", cover);
+
+    
+    console.log("Inserting into DB:", { title, author, review, cover});
+
+   
+    await db.query("INSERT INTO books (title, author, review, star, cover) VALUES ($1, $2, $3, $4, $5)", 
+      [title, author, review, rating,  cover]
+    ); 
+
+   
     
     res.redirect("/");
   } catch(err) {
