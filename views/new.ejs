@@ -11,52 +11,27 @@
 <div class="mb-3">
   <label for="content" class="form-label">Review:</label>
   <textarea class="form-control form-content" name="review" rows="8" required></textarea>
- 
-<div class="text-center">
-    <div class="ratings-wrapper">
-      <div class="ratings" name="ratings">
-        <span data-rating="5" class="fa fa-star"></span>
-        <span data-rating="4" class="fa fa-star"></span>
-        <span data-rating="3" class="fa fa-star"></span>
-        <span data-rating="2" class="fa fa-star"></span>
-        <span data-rating="1" class="fa fa-star"></span>
-      </div>
-    </div>
-  </div>
 
- 
-<div class="text-center">
-<button type="submit" class="card-btn btn"> Submit </button>
-</div>
+  <div class="ratings-wrapper">
+    <div class="ratings">
+       <span data-rating="5">★</span>
+       <span data-rating="4">★</span>
+       <span data-rating="3">★</span>
+       <span data-rating="2">★</span>
+       <span data-rating="1">★</span>
+    </div>
+ </div>
+
+ <input type="hidden" name="ratings" id="ratingInput" value="">
+
+ <div class="text-center">
+  <button type="submit" class="card-btn btn"> Submit </button>
+  </div>
 </div>
 </form>
+ 
+
 </div>
 
-<script>
+</div>
 
-  let stars = document.querySelectorAll(".ratings span");
-  let products = document.querySelectorAll(".ratings");
-  let ratings = []; 
-
-  for(let star of stars){
-    star.addEventListener("click", function(){
-
-      let children = star.parentElement.children; 
-      for(let child of children) {
-        if(child.getAttribute("data-clicked")) {
-          return false;
-        }
-      }
-      
-      this.setAttribute("data-clicked", "true");
-      let rating = this.dataset.rating; 
-      console.log(rating);
-
-      ratings.push(rating);
-
-
-    });
-
-  }
-
-</script>

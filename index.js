@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // Middleware to find blog ID 
-async function findBookById(req, res, next) {
+/*async function findBookById(req, res, next) {
   const bookId = req.params.id; 
   
 
@@ -27,6 +27,7 @@ async function findBookById(req, res, next) {
     const result = await db.query("SELECT * FROM books WHERE id = $1", 
       [bookId]
     );
+    
 
     if (result.rows.length === 0) {
       console.log("Book not found! ID:", bookId);
@@ -41,7 +42,7 @@ async function findBookById(req, res, next) {
     console.log("Error fetching book id:", err);
     res.status(500).send("Server error");
   }
-}
+} */ 
 
 let books = [];
 
@@ -76,38 +77,29 @@ app.post("/new", async (req,res) => {
   const rating = req.body.ratings;
   let cover = null;
 
+  console.log("Recieved rating:", rating);
+
   try {
     // Fetch ISBN from Openlibrary 
-    const response = await fetch(`https://openlibrary.org/search.json?title=${title}`);
+    const response = await fetch(`https://openlibrary.org/search.json?title=${title}&fields=*`);
    
     const data = await response.json(); // convert response into a JSON format 
-    console.log("Number of books found:", data.docs.length);
-
   
-    
-    
-
     if (data.docs.length > 0) {
       let firstBook = data.docs[0]; 
       console.log("Firstbook:", firstBook);
 
       if(firstBook.key) {
-         cover = firstBook.cover_edition_key;
+         cover = firstBook.isbn[0];
       }  
     }
-
     console.log("Open library ID:", cover);
+    console.log("Inserting into DB:", { title, author, review, rating, cover});
 
-    
-    console.log("Inserting into DB:", { title, author, review, cover});
 
-   
     await db.query("INSERT INTO books (title, author, review, star, cover) VALUES ($1, $2, $3, $4, $5)", 
       [title, author, review, rating,  cover]
-    ); 
-
-   
-    
+    );  
     res.redirect("/");
   } catch(err) {
     console.log(err);
@@ -115,21 +107,25 @@ app.post("/new", async (req,res) => {
 });
 
 // Edit post
-app.get("/edit/:id", findBookById, (req, res) => {
+app.get("/edit/:id", async (req, res) => {
+  const postId = req.params.id 
+  const result = await db.query("SELECT * FROM books WHERE id = $1", [postId]);
+  
+  books = result.rows[0];
   console.log("Received ID:", req.params.id);
-  res.render("edit.ejs", {book: req.book});
+  res.render("edit.ejs", {book: books});
 });
 
 // Update post 
-app.post("/update/:id", findBookById, async (req, res) => {
+app.post("/update/:id", async (req, res) => {
   console.log("Received ID in POST request:", req.params.id); // Debugging
 
   if (!req.params.id) {
     return res.status(400).send("Missing book ID in request");
   }
 
-  const postId = req.book.id;
-  console.log("Found Book:", req.book);
+  const postId = req.params.id;
+  console.log("Found Book:", req.params.id);
 
   const title = req.body.title; 
   const author = req.body.author;
@@ -147,8 +143,8 @@ app.post("/update/:id", findBookById, async (req, res) => {
 
 
 // Delete post 
-app.get("/delete/:id", findBookById, async (req, res) => {
-  const postId = req.book.id;
+app.get("/delete/:id", async (req, res) => {
+  const postId = req.params.id;
   console.log("Delete:", postId);
   try {
     await db.query("DELETE FROM books WHERE id = $1", [postId]);

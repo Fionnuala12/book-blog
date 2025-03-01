@@ -19,20 +19,23 @@
             <div class="card mb-3" style="max-width: 680px;">
               <div class="row g-0">
                 <div class="col-md-4">
-                  <img src="https://covers.openlibrary.org/b/olid/<%= book.cover %>-M.jpg" class="img-fluid rounded-start cover-img" alt="Book Cover">
+                  <img src="https://covers.openlibrary.org/b/isbn/<%= book.cover %>-M.jpg" class="img-fluid rounded-start cover-img" alt="Book Cover">
                 </div>
                 <div class="col-md-8">
                   <div class="card-body">
                     <h5 class="card-title"><%= book.title %></h5>
                     <h6 class="card-text"><%= book.author %></h6>
                     <p class="card-text"><%= book.review.substring(0,200) + '...' %></p>
-                    <div class="star-rating">
-                      <span class="fa fa-star checked"></span>
-                      <span class="fa fa-star checked"></span>
-                      <span class="fa fa-star checked"></span>
-                      <span class="fa fa-star"></span>
-                      <span class="fa fa-star"></span>
+
+
+                    <div class="star-rating rating-container">
+                      <% for (let i = 1; i <= 5; i++) { %>
+                        <span class="fa fa-star <%= i <= book.star ? 'checked' : '' %>"> </span>
+                        <% console.log(book.star) %>
+                      <% } %>
                     </div>
+
+
                     <p class="card-text"><small class="text-body-secondary"><%= book.datecolumn %></small></p>
                     <div class="btn-container d-flex gap-2">
                     <button type="button" class="card-btn btn"> <a href="/edit/<%= book.id %>" class="card-link"> Edit </a></button> 
@@ -49,6 +52,4 @@
     </div>
   </main>
 
-
-</body>
-</html>
+  <%- include("partials/footer.ejs") %>
