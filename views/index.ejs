@@ -31,25 +31,32 @@
                     <div class="star-rating rating-container">
                       <% for (let i = 1; i <= 5; i++) { %>
                         <span class="fa fa-star <%= i <= book.star ? 'checked' : '' %>"> </span>
-                        <% console.log(book.star) %>
                       <% } %>
                     </div>
 
 
-                    <p class="card-text"><small class="text-body-secondary"><%= book.datecolumn %></small></p>
+                    <p class="card-text"><small class="text-body-secondary"><%= new Date(book.datecolumn).toDateString() %></small></p>
                     <div class="btn-container d-flex gap-2">
-                    <button type="button" class="card-btn btn"> <a href="/edit/<%= book.id %>" class="card-link"> Edit </a></button> 
+                    <form action="/edit/<%= book.id %>" method="get"> 
+                      <button class="add-button" type="submit">Edit</button>
+                    </form>
+                    
                     <form action="/delete/<%= book.id %>" method="get" onsubmit="return confirm('Are you sure you want to delete this post?');">
-                    <button class="card-btn btn" type="submit"><i class="fa-solid fa-trash"></i></button>
+                    <button class="add-button" type="submit"><i class="fa-solid fa-trash"></i></button>
                   </form>
                   </div>
                   </div>
                 </div>
               </div>
-            </div>        
-        <% }) %>
-     </div>         
-    </div>
+            </div>   
+        <% }) %>  
+          </div>   
   </main>
 
-  <%- include("partials/footer.ejs") %>
+
+
+
+
+
+
+

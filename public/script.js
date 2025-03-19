@@ -1,3 +1,7 @@
+
+
+
+// Star Rating 
 document.addEventListener("DOMContentLoaded", function() {
     let ratingInput = document.getElementById("ratingInput");
     console.log("Ratings from server:", ratingInput);

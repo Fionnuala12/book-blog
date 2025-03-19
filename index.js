@@ -49,7 +49,7 @@ let books = [];
 // Home page 
 app.get("/", async (req, res) => {
   try {
-    const result = await db.query("SELECT * FROM books");  
+    const result = await db.query("SELECT * FROM books ORDER BY datecolumn DESC");  
     books = result.rows; 
 
     const bookCount = await db.query("SELECT COUNT (title) FROM books");
@@ -75,6 +75,7 @@ app.post("/new", async (req,res) => {
   const author = req.body.author; 
   const review = req.body.review;
   const rating = req.body.ratings;
+  const date = new Date();
   let cover = null;
 
   console.log("Recieved rating:", rating);
@@ -97,8 +98,8 @@ app.post("/new", async (req,res) => {
     console.log("Inserting into DB:", { title, author, review, rating, cover});
 
 
-    await db.query("INSERT INTO books (title, author, review, star, cover) VALUES ($1, $2, $3, $4, $5)", 
-      [title, author, review, rating,  cover]
+    await db.query("INSERT INTO books (title, author, review, star, datecolumn, cover) VALUES ($1, $2, $3, $4, $5, $6)", 
+      [title, author, review, rating, date, cover]
     );  
     res.redirect("/");
   } catch(err) {
@@ -109,7 +110,7 @@ app.post("/new", async (req,res) => {
 // Edit post
 app.get("/edit/:id", async (req, res) => {
   const postId = req.params.id 
-  const result = await db.query("SELECT * FROM books WHERE id = $1", [postId]);
+  const result = await db.query("SELECT * FROM books WHERE id = $1 ", [postId]);
   
   books = result.rows[0];
   console.log("Received ID:", req.params.id);
@@ -130,10 +131,11 @@ app.post("/update/:id", async (req, res) => {
   const title = req.body.title; 
   const author = req.body.author;
   const review = req.body.review;
+  const rating = req.body.ratings;
 
   try {
-    await db.query("UPDATE books SET title = $1, author = $2, review = $3 WHERE id = $4",
-      [title, author, review, postId]);
+    await db.query("UPDATE books SET title = $1, author = $2, review = $3, star = $4 WHERE id = $5",
+      [title, author, review, rating, postId]);
       res.redirect("/");
   } catch(err) {
     console.log(err);

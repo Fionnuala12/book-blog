@@ -19,6 +19,12 @@ body {
     padding-top: 25px;
 }
 
+@media screen and (max-width: 700px) {
+    .header-img {
+        width: 400px;
+    }
+}
+
 .top-line {
     margin-top: 2em;
     margin-bottom: 1em;
@@ -32,6 +38,67 @@ h3 {
     padding-top: 15px;
     text-align: center;
     color:#333333;
+}
+
+
+@media screen and (max-width: 700px) {
+    .main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    }
+  }
+
+
+/* Cards */
+.card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+@media screen and (max-width: 700px) {
+    .card {
+        width: 350px;
+    }
+}
+
+
+/* Back Button */
+.back-btn {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    font-size: 24px;
+    color: #F18949;
+    border: none;
+    background-color: #FFFDF5;
+    
+}
+.link-back-btn {
+    text-decoration: none;
+    color: #F18949;
+}
+
+.back-btn:hover {
+    transition: 0.3s;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.arrow-img {
+    padding-right: 8px;
+}
+
+@media screen and (max-width: 700px) {
+    .back-btn {
+        position: relative;
+        left: -150px;
+        font-size: 12px;
+        padding-bottom: 30px;
+    }
+    
 }
 
 /* Add Form */
@@ -80,6 +147,12 @@ input[type="text"] {
   opacity: .5;
 }
 
+@media screen and (max-width: 700px){
+ .vh-100 {
+        height: 85vh !important;
+    }
+}
+
 
 /* Page */ 
 .main-container {
@@ -101,14 +174,10 @@ input[type="text"] {
     margin-bottom: 2em;
 }
 
-a {
-    color: #fff;
-    text-decoration: none;  
-}
 
-.card-btn {
-    background-color: #F18949;
-    color: #fff;
+/* Add/Edit Button */
+a {
+    text-decoration: none; 
 }
 
 /* Star rating */
@@ -155,6 +224,21 @@ a {
     color: gold;
  }
 
+ @media screen and (max-width: 700px) {
+    .ratings-wrapper {
+        margin-bottom: 15px;
+    }
+ }
+
+ /* Footer */ 
+ footer {
+    position: relative;
+    padding: 10px;
+    width: 100%;
+    bottom: 0;
+    background-color: #F18949;
+    color: #fff;
+ }
 
 
 
