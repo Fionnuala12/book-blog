@@ -1,6 +1,3 @@
-
-
-
 // Star Rating 
 document.addEventListener("DOMContentLoaded", function() {
     let ratingInput = document.getElementById("ratingInput");
