@@ -1,5 +1,6 @@
 :root {
     --body-fonts: "Josefin Sans", sans-serif;
+    --primary-color: #F18949;
 }
 
 body {
@@ -12,6 +13,7 @@ body {
     font-family: var(--body-fonts);
 }
 
+/* Header */ 
 .header-img {
     display: block;
     margin: 0 auto;
@@ -23,6 +25,11 @@ body {
     .header-img {
         width: 400px;
     }
+}
+
+.total-books {
+    position: absolute;
+    top: 20px;
 }
 
 .top-line {
@@ -47,6 +54,7 @@ h3 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 0;
     }
   }
 
@@ -71,14 +79,14 @@ h3 {
     top: 30px;
     left: 30px;
     font-size: 24px;
-    color: #F18949;
+    color: var(--primary-color);
     border: none;
     background-color: #FFFDF5;
     
 }
 .link-back-btn {
     text-decoration: none;
-    color: #F18949;
+    color: var(--primary-color);
 }
 
 .back-btn:hover {
@@ -98,7 +106,6 @@ h3 {
         font-size: 12px;
         padding-bottom: 30px;
     }
-    
 }
 
 /* Add Form */
@@ -113,15 +120,15 @@ h3 {
 
 input[type="text"] {
     padding: 0.5em;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
     border: 1px solid #ccc;
     border-radius: 4px;
     width: 300px;
 }
 
 .add-button {
-  background: #F18949;
-  border: 1px solid #F18949;
+  background: var(--primary-color);
+  border: 1px solid var(--primary-color);
   border-radius: 6px;
   box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
   box-sizing: border-box;
@@ -141,23 +148,17 @@ input[type="text"] {
 .add-button:active {
   background-color: initial;
   background-position: 0 0;
-  color: #F18949;
+  color: var(--primary-color);
 }
 
 .add-button:active {
   opacity: .5;
 }
 
-@media screen and (max-width: 700px){
- .vh-100 {
-        height: 85vh !important;
-    }
-}
-
 
 /* Page */ 
 .main-container {
-    position: absolute; 
+    position: relative; 
     margin-top: 3em;  
 }
 
@@ -235,10 +236,17 @@ a {
  footer {
     position: relative;
     padding: 10px;
+    margin-top: 20px;
     width: 100%;
     bottom: 0;
-    background-color: #F18949;
+    background-color: var(--primary-color);
     color: #fff;
+ }
+
+ @media screen and (max-width: 700px) {
+    footer {
+        text-align: center;
+    }
  }
 
 

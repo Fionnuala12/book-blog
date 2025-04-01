@@ -20,31 +20,6 @@ const port = 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-// Middleware to find blog ID 
-/*async function findBookById(req, res, next) {
-  const bookId = req.params.id; 
-  
-
-  try {
-    const result = await db.query("SELECT * FROM books WHERE id = $1", 
-      [bookId]
-    );
-    
-
-    if (result.rows.length === 0) {
-      console.log("Book not found! ID:", bookId);
-      return res.status(404).send("Book post not found");
-    }
-
-    req.book = result.rows[0];
-    console.log("Book found:", req.book)
-    next();
-
-  } catch(err) {
-    console.log("Error fetching book id:", err);
-    res.status(500).send("Server error");
-  }
-} */ 
 
 let books = [];
 

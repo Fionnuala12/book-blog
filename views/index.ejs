@@ -1,17 +1,17 @@
 <%- include('partials/header.ejs'); -%>
-  <main>
+     
         <hr class="top-line">
         
         <h3> You've read a total of <%= totalBook %> books </h3>
 
-        <div data-rating="5"></div>
+        
 
         <form class="add-form" action="/add" method="get">
-            <input type="text" name="add" autofocus placeholder="Add new book...">
-            <button class="add-button" type="submit"> Add </button>
+            <button class="add-button" type="submit"> Add a new book! </button>
           </form>
 
         <hr class="bottom-line">
+
 
         <div class="main-container">
         <% books.forEach(book => { %>
@@ -49,9 +49,25 @@
                 </div>
               </div>
             </div>   
-        <% }) %>  
-          </div>   
-  </main>
+        <% }) %> 
+
+          </div>
+        </div>
+          <%- include("partials/footer.ejs") %>
+        </main>
+       
+   
+
+       
+    
+          
+
+
+  
+      
+    
+         
+
 
 
 
